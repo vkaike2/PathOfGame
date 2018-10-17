@@ -54,29 +54,19 @@ public class PlayerService : MonoBehaviour
         float fire = Input.GetAxisRaw(AxisUtils.AXIS_FIRE1);
         cdwAtk += Time.deltaTime;
 
-
         if (fire != 0 && cdwAtk >= player.atkSpeed)
         {
-            Quaternion rotation;
-            if (gameObject.transform.localScale.x >= 0)
-                rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-            else
-                rotation = Quaternion.Euler(new Vector3(0, 180, 0));
-
-            Instantiate(Projetil, RangeAtack.transform.position, rotation);
-
+            Instantiate(Projetil, RangeAtack.transform.position, gameObject.transform.rotation);
             cdwAtk = 0;
         }
     }
 
     public void MudarDirecao()
     {
-        Vector3 escala = gameObject.transform.localScale;
-        if (axisH > 0 && escala.x <= 0 || axisH < 0 && escala.x >= 0)
-        {
-            escala.x = escala.x * -1;
-        }
-        gameObject.transform.localScale = escala;
+        if(axisH > 0 && gameObject.transform.eulerAngles.y == 180)
+            gameObject.transform.eulerAngles = new Vector3(0,0,0);
+        else if (axisH < 0 && gameObject.transform.eulerAngles.y == 0)
+            gameObject.transform.eulerAngles = new Vector3(0, 180, 0);
     }
 
 }

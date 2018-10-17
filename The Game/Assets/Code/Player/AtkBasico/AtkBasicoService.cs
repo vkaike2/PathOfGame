@@ -31,18 +31,8 @@ public class AtkBasicoService : MonoBehaviour
     public void Excluir()
     {
         cdwRange += Time.deltaTime;
-
-        Transform fimVisao = gameObject.transform;
-
-        Debug.DrawLine(InicioColisor.position, FimColisor.position, Color.red);
-        RaycastHit2D colidiu = Physics2D.Raycast(InicioColisor.position, FimColisor.position, 0.5f);
-        
-        if (cdwRange > AtkBasico.RangeSec
-            || colidiu.collider !=null && colidiu.collider.IsTouchingLayers() 
-            )
-        {
-            Debug.Log(colidiu.collider);
+        if (cdwRange > AtkBasico.RangeSec)
             Destroy(gameObject);
-        }
+
     }
 }
