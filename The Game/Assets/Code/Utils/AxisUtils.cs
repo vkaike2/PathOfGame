@@ -9,5 +9,6 @@ namespace Assets.Code.Utils
     {
         public static String AXIS_HORIZONTAL = "Horizontal";
         public static String AXIS_VERTICAL = "Vertical";
+        public static String AXIS_FIRE1 = "Fire1";
     }
 }
