@@ -78,4 +78,14 @@ public class ZombieService : MonoBehaviour
         else
             gameObject.transform.eulerAngles = new Vector3(0, 180, 0);
     }
+
+    public void ReceberDano(float dmg)
+    {
+        float lifeRestante = zombie.Hp - dmg;
+
+        if (lifeRestante <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 }

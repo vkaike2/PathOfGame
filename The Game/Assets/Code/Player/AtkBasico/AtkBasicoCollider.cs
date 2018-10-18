@@ -19,5 +19,11 @@ public class AtkBasicoCollider : MonoBehaviour {
     {
         if(coll.gameObject.tag != "Player")
             Destroy(gameObject);
+
+        if(coll.gameObject.tag == "Enemies")
+        {
+            coll.gameObject.GetComponent<ZombieService>().ReceberDano(1);
+        }
+
     }
 }
