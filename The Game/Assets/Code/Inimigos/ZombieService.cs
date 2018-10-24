@@ -1,15 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
+
 using UnityEngine;
 
 public class ZombieService : MonoBehaviour
 {
     private float cdwAndar = 0;
+    private float cdwAtkSpeed = 0;
     private bool estaAndando = false;
     private int direcao = 0;
     private Zombie zombie { get; set; }
     public Transform inicioVisao, fimVisao;
     private GameObject PlayerGameObject { get; set; }
+    private int velHorizontal = 0;
 
     void Start()
     {
@@ -69,6 +71,31 @@ public class ZombieService : MonoBehaviour
             cdwAndar = 0;
             estaAndando = false;
         }
+    }
+
+    public bool Atacar()
+    {
+        if (zombie.velHorizontal != 0)
+            velHorizontal = zombie.velHorizontal;
+
+        zombie.velHorizontal = 0;
+        cdwAtkSpeed += Time.deltaTime;
+
+        if (cdwAtkSpeed >= zombie.cdwAtkSpeed)
+        {
+            cdwAtkSpeed = 0;
+            return true;
+        }
+        return false;
+    }
+
+    public void ResetarCdwAtaque()
+    {
+        if (velHorizontal != 0)
+        {
+            zombie.velHorizontal = velHorizontal;
+        }
+        cdwAtkSpeed = 0;
     }
 
     public void MudarDirecao()

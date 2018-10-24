@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Code.Utils;
+using UnityEngine.SceneManagement;
 
 public class PlayerService : MonoBehaviour
 {
@@ -69,4 +70,18 @@ public class PlayerService : MonoBehaviour
             gameObject.transform.eulerAngles = new Vector3(0, 180, 0);
     }
 
+    public void ReceberDano(float dmg)
+    {
+        float lifeRestante = player.Hp - dmg;
+        Debug.Log("Ai pai Para!");
+        if (lifeRestante <= 0)
+        {
+            Destroy(gameObject);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        else
+        {
+            player.Hp -= dmg;
+        }
+    }
 }
