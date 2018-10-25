@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AtkBasico : MonoBehaviour
+public class Zombie : MonoBehaviour
 {
-
-    public float Damage;
-    public int velHorizontal;
-    public int RangeSec;
     public Rigidbody2D rb { get; set; }
+    public int velHorizontal;
+    public List<int> cdwAndar;
+    public int cdwAtkSpeed;
+    public float Hp;
+    public float Dmg;
 
     void Start()
     {

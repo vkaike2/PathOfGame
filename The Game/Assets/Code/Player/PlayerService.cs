@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Code.Utils;
 using UnityEngine.SceneManagement;
+using System;
 
 public class PlayerService : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class PlayerService : MonoBehaviour
     public GameObject Projetil;
     public GameObject RangeAtack; 
     private float cdwAtk = 0;
+
+    //Guarda a Velocidade Horizontal do Player Quando ele para o Moviemnto
+    private int vHorizontal = 0;
+    //Guarda a Velocidade Verical do Player Quando ele para o Moviemnto
+    private int vVerical = 0;
 
     void Start()
     {
@@ -35,7 +41,7 @@ public class PlayerService : MonoBehaviour
         else if (axisH != 0 && playerPuloCollider.GetEstaPulando())
         {
             Vector2 vetHorizontal = new Vector2(axisH, 0);
-            player.rb.AddForce(vetHorizontal * (player.velHorizontal * 4));
+            player.rb.AddForce(vetHorizontal * (player.velHorizontal * 3));
         }
     }
 
@@ -83,5 +89,26 @@ public class PlayerService : MonoBehaviour
         {
             player.Hp -= dmg;
         }
+    }
+
+    internal void PararMovimentos(bool pararMovimentos)
+    {
+        if(pararMovimentos)
+        {
+            if(vHorizontal == 0 && vVerical == 0)
+            {
+                vHorizontal = player.velHorizontal;
+                vVerical = player.velVertical;
+            }
+            player.velHorizontal = 0;
+            player.velVertical = 0;
+        }
+        else
+        {
+            Debug.Log(vHorizontal);
+            player.velHorizontal = vHorizontal;
+            player.velVertical = vVerical;
+        }
+        //throw new NotImplementedException();
     }
 }

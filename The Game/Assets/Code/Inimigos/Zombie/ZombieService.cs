@@ -9,7 +9,7 @@ public class ZombieService : MonoBehaviour
     private bool estaAndando = false;
     private int direcao = 0;
     private Zombie zombie { get; set; }
-    public Transform inicioVisao, fimVisao;
+    public Transform inicioVisao, fimVisao, visaoChao;
     private GameObject PlayerGameObject { get; set; }
     private int velHorizontal = 0;
 
@@ -22,6 +22,7 @@ public class ZombieService : MonoBehaviour
     public void Andar()
     {
         Debug.DrawLine(inicioVisao.position, fimVisao.position, Color.red);
+        Debug.DrawLine(inicioVisao.position, visaoChao.position, Color.green);
         bool estaVendoPlayer = Physics2D.Linecast(inicioVisao.position, fimVisao.position, 1 << LayerMask.NameToLayer("Player"));
 
         if (estaVendoPlayer)
@@ -53,7 +54,7 @@ public class ZombieService : MonoBehaviour
     private void IdleAndar()
     {
         cdwAndar += Time.deltaTime;
-
+        bool naoVaiCair = Physics2D.Linecast(inicioVisao.position, visaoChao.position, 1 << LayerMask.NameToLayer("Parede"));
         if (cdwAndar >= zombie.cdwAndar[0] &&
             cdwAndar <= (zombie.cdwAndar[0] + zombie.cdwAndar[1]))
         {
@@ -62,8 +63,12 @@ public class ZombieService : MonoBehaviour
                 direcao = Random.Range(-1, 2);
                 estaAndando = true;
             }
-            Vector2 velHorizontal = new Vector2(direcao * zombie.velHorizontal, zombie.rb.velocity.y);
-            zombie.rb.velocity = velHorizontal;
+
+            if (naoVaiCair)
+            {
+                Vector2 velHorizontal = new Vector2(direcao * zombie.velHorizontal, zombie.rb.velocity.y);
+                zombie.rb.velocity = velHorizontal;
+            }
         }
 
         if (cdwAndar >= (zombie.cdwAndar[0] + zombie.cdwAndar[1]))

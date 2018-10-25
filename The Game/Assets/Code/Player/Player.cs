@@ -4,18 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public int velHorizontal { get; set; }
-    public int velVertical { get; set; }
     public Rigidbody2D rb { get; set; }
-    public float atkSpeed { get; set; }
-    public float Hp { get; set; }
+    public int velHorizontal;
+    public int velVertical;
+    public float atkSpeed;
+    public float Hp;
 
     void Start()
     {
-        this.velHorizontal = 5;
-        this.velVertical = 1000;
         this.rb = gameObject.GetComponent<Rigidbody2D>();
-        this.atkSpeed = 2;
-        this.Hp = 2;
     }
 }
