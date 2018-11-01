@@ -11,14 +11,8 @@ public class CheckHillockCollider : MonoBehaviour {
     
     void OnTriggerEnter2D(Collider2D coll)
     {
-        FecharParede();
-    }
-
-    void OnTriggerStay2D(Collider2D coll)
-    {
-    }
-    void OnTriggerExit2D(Collider2D coll)
-    {
+        if(coll.gameObject.tag == "Player")
+            FecharParede();
     }
 
     private void FecharParede()

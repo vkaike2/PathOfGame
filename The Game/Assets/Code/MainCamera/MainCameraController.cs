@@ -87,6 +87,7 @@ public class MainCameraController : MonoBehaviour
                     cdwCs = 0;
                     contadorAnimacao = 0;
                     Player.GetComponent<PlayerService>().PararMovimentos(false);
+                    Hillock.GetComponent<HillockService>().PararCutscene();
                     HillockCs = false;
                     Cutscene = false;
                 }

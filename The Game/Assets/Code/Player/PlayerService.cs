@@ -105,7 +105,6 @@ public class PlayerService : MonoBehaviour
         }
         else
         {
-            Debug.Log(vHorizontal);
             player.velHorizontal = vHorizontal;
             player.velVertical = vVerical;
         }

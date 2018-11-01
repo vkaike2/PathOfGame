@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Hillock : MonoBehaviour {
 
-    // Use this for initialization
+    public Rigidbody2D rb { get; set; }
+    public int velHorizontal;
+    public float cdwAtkSpeed;
+    public float Hp;
+    public float Dmg;
+
     void Start () {
-		
+        rb = gameObject.GetComponent<Rigidbody2D>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

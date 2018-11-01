@@ -5,11 +5,12 @@ using UnityEngine;
 public class ZombieDmgCollider : MonoBehaviour {
 
     private Zombie zombie { get; set; }
-    public GameObject player;
+    private GameObject player;
 
     void Start()
     {
         zombie = gameObject.GetComponentInParent<Zombie>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void OnTriggerEnter2D(Collider2D coll)

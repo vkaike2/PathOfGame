@@ -40,13 +40,10 @@ public class ZombieService : MonoBehaviour
         float playerX = PlayerGameObject.transform.position.x;
         float ZombieX = gameObject.transform.position.x;
         if (playerX > ZombieX)
-        {
             direcao = 1;
-        }
         else
-        {
             direcao = -1;
-        }
+
         Vector2 velHorizontal = new Vector2(direcao * zombie.velHorizontal * 1.5f, zombie.rb.velocity.y);
         zombie.rb.velocity = velHorizontal;
     }
@@ -116,8 +113,8 @@ public class ZombieService : MonoBehaviour
         float lifeRestante = zombie.Hp - dmg;
 
         if (lifeRestante <= 0)
-        {
             Destroy(gameObject);
-        }
+        else
+            zombie.Hp = lifeRestante;
     }
 }

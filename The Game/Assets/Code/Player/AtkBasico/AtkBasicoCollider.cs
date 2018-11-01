@@ -24,6 +24,11 @@ public class AtkBasicoCollider : MonoBehaviour {
         {
             coll.gameObject.GetComponent<ZombieService>().ReceberDano(1);
         }
+        if(coll.gameObject.tag == "Hillock")
+        {
+            coll.gameObject.GetComponent<HillockService>().ReceberDano(1);
+        }
+
 
     }
 }
