@@ -25,12 +25,12 @@ public class HillockAtackCollider : MonoBehaviour
             cdwAtaq += Time.deltaTime;
             if (cdwAtaq >= Hillock.cdwAtkSpeed)
             {
-                Debug.Log(podeAtacar);
                 if (podeAtacar)
                     player.GetComponent<PlayerService>().ReceberDano(Hillock.Dmg);
 
                 cdwAtaq = 0;
                 gameObject.SetActive(false);
+                gameObject.GetComponent<HillockService>().estaAtacando = false;
             }
         }
         else

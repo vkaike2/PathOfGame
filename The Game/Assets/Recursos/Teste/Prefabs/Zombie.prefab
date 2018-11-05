@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4563111202370352}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: inicioVisao
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4095932063817740}
   - component: {fileID: 61140996004640408}
   - component: {fileID: 114321090306269802}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Dmg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 4171418073827916}
   - component: {fileID: 61725511766340386}
   - component: {fileID: 114516664596123266}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AtackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4399859999137890}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: visaoChao
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +83,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4363528700159864}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: fimVisao
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 114436435421685280}
   - component: {fileID: 114797463970912980}
   - component: {fileID: 114853492903035834}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Zombie
   m_TagString: Enemies
   m_Icon: {fileID: 0}
@@ -300,7 +300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9efd74a6a5ff2894999a045d1ed373d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!114 &114436435421685280
 MonoBehaviour:
   m_ObjectHideFlags: 1

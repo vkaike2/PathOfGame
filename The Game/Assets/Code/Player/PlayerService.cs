@@ -8,12 +8,13 @@ using System;
 public class PlayerService : MonoBehaviour
 {
 
-    private Player player { get; set; }
-    private PlayerPuloCollider playerPuloCollider { get; set; }
-    private PlayerParedeCollider playerParedeCollider { get; set; }
+    private Player Player { get; set; }
+    private PlayerPuloCollider PlayerPuloCollider { get; set; }
+    private PlayerParedeCollider PlayerParedeCollider { get; set; }
     private float axisH;
     public GameObject Projetil;
     public GameObject RangeAtack; 
+    private float cdwDmg = 0;
     private float cdwAtk = 0;
 
     //Guarda a Velocidade Horizontal do Player Quando ele para o Moviemnto
@@ -21,27 +22,30 @@ public class PlayerService : MonoBehaviour
     //Guarda a Velocidade Verical do Player Quando ele para o Moviemnto
     private int vVerical = 0;
 
+    private Color corOriginal;
+
     void Start()
     {
-        this.player = gameObject.GetComponent<Player>();
-        this.playerPuloCollider = gameObject.GetComponentInChildren<PlayerPuloCollider>();
-        this.playerParedeCollider = gameObject.GetComponentInChildren<PlayerParedeCollider>();
+        this.Player = gameObject.GetComponent<Player>();
+        this.PlayerPuloCollider = gameObject.GetComponentInChildren<PlayerPuloCollider>();
+        this.PlayerParedeCollider = gameObject.GetComponentInChildren<PlayerParedeCollider>();
+        corOriginal = gameObject.GetComponent<SpriteRenderer>().color;
     }
 
     public void Andar()
     {
         axisH = Input.GetAxisRaw(AxisUtils.AXIS_HORIZONTAL);
 
-        if (axisH != 0 && !playerPuloCollider.GetEstaPulando() && !playerParedeCollider.GetEstaNaParede()
-            || axisH != 0 && !playerPuloCollider.GetEstaPulando() && playerParedeCollider.GetEstaNaParede())
+        if (axisH != 0 && !PlayerPuloCollider.GetEstaPulando() && !PlayerParedeCollider.GetEstaNaParede()
+            || axisH != 0 && !PlayerPuloCollider.GetEstaPulando() && PlayerParedeCollider.GetEstaNaParede())
         {
-            Vector2 vetHorizontal = new Vector2(axisH * player.velHorizontal, player.rb.velocity.y);
-            player.rb.velocity = vetHorizontal;
+            Vector2 vetHorizontal = new Vector2(axisH * Player.velHorizontal, Player.rb.velocity.y);
+            Player.rb.velocity = vetHorizontal;
         }
-        else if (axisH != 0 && playerPuloCollider.GetEstaPulando())
+        else if (axisH != 0 && PlayerPuloCollider.GetEstaPulando())
         {
             Vector2 vetHorizontal = new Vector2(axisH, 0);
-            player.rb.AddForce(vetHorizontal * (player.velHorizontal * 3));
+            Player.rb.AddForce(vetHorizontal * (Player.velHorizontal * 3));
         }
     }
 
@@ -49,19 +53,18 @@ public class PlayerService : MonoBehaviour
     {
         float axisV = Input.GetAxisRaw(AxisUtils.AXIS_VERTICAL);
 
-        if (axisV != 0 && !playerPuloCollider.GetEstaPulando())
+        if (axisV != 0 && !PlayerPuloCollider.GetEstaPulando())
         {
             Vector2 vetVertical = new Vector2(0, axisV);
-            player.rb.AddForce(vetVertical * player.velVertical);
+            Player.rb.AddForce(vetVertical * Player.velVertical);
         }
     }
 
-    public void atacar()
+    public void Atacar()
     {
         float fire = Input.GetAxisRaw(AxisUtils.AXIS_FIRE1);
-        cdwAtk += Time.deltaTime;
 
-        if (fire != 0 && cdwAtk >= player.atkSpeed)
+        if (fire != 0 && cdwAtk >= Player.atkSpeed)
         {
             Instantiate(Projetil, RangeAtack.transform.position, gameObject.transform.rotation);
             cdwAtk = 0;
@@ -76,18 +79,32 @@ public class PlayerService : MonoBehaviour
             gameObject.transform.eulerAngles = new Vector3(0, 180, 0);
     }
 
+    public void AtualizaCdw()
+    {
+        cdwAtk += Time.deltaTime;
+        cdwDmg += Time.deltaTime;
+
+        if (cdwDmg < Player.cdwDmage)
+            gameObject.GetComponent<SpriteRenderer>().color = Color.black;
+        else
+            gameObject.GetComponent<SpriteRenderer>().color = corOriginal;
+    }
+
     public void ReceberDano(float dmg)
     {
-        float lifeRestante = player.Hp - dmg;
-        Debug.Log("Ai pai Para!");
-        if (lifeRestante <= 0)
+        if(cdwDmg >= Player.cdwDmage)
         {
-            Destroy(gameObject);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-        else
-        {
-            player.Hp -= dmg;
+            float lifeRestante = Player.Hp - dmg;
+            if (lifeRestante <= 0)
+            {
+                Destroy(gameObject);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            else
+            {
+                Player.Hp -= dmg;
+            }
+            cdwDmg = 0;
         }
     }
 
@@ -97,17 +114,16 @@ public class PlayerService : MonoBehaviour
         {
             if(vHorizontal == 0 && vVerical == 0)
             {
-                vHorizontal = player.velHorizontal;
-                vVerical = player.velVertical;
+                vHorizontal = Player.velHorizontal;
+                vVerical = Player.velVertical;
             }
-            player.velHorizontal = 0;
-            player.velVertical = 0;
+            Player.velHorizontal = 0;
+            Player.velVertical = 0;
         }
         else
         {
-            player.velHorizontal = vHorizontal;
-            player.velVertical = vVerical;
+            Player.velHorizontal = vHorizontal;
+            Player.velVertical = vVerical;
         }
-        //throw new NotImplementedException();
     }
 }

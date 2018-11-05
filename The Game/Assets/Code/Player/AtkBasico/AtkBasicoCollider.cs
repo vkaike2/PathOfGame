@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Code.Utils;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +18,7 @@ public class AtkBasicoCollider : MonoBehaviour {
 
     void IgnorarPlayer(Collider2D coll)
     {
-        if(coll.gameObject.tag != "Player")
+        if(coll.gameObject.tag != "Player" && coll.gameObject.tag != "Untagged")
             Destroy(gameObject);
 
         if(coll.gameObject.tag == "Enemies")

@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class HillockController : MonoBehaviour {
 
-    public HillockService hillockService { get; set; }
+    public HillockService HillockService { get; set; }
 
     void Start () {
-        hillockService = gameObject.GetComponent<HillockService>();
+        HillockService = gameObject.GetComponent<HillockService>();
 	}
 	
 	void Update () {
-        hillockService.MudarDirecao();
+        HillockService.MudarDirecao();
 	}
 
     void FixedUpdate()
     {
-        hillockService.Movimentar();
-        hillockService.Atacar();
+        HillockService.Movimentar();
+        HillockService.Atacar();
+        HillockService.MovimentaNoAr();
     }
 }

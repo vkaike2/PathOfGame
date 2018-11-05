@@ -7,8 +7,8 @@ namespace Assets.Code.Utils
 {
     class AxisUtils
     {
-        public static String AXIS_HORIZONTAL = "Horizontal";
-        public static String AXIS_VERTICAL = "Vertical";
-        public static String AXIS_FIRE1 = "Fire1";
+        public static string AXIS_HORIZONTAL = "Horizontal";
+        public static string AXIS_VERTICAL = "Vertical";
+        public static string AXIS_FIRE1 = "Fire1";
     }
 }

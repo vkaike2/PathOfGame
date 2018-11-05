@@ -5,30 +5,24 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private PlayerService playerService;
-    //public GameObject projetil;
-    //public GameObject rangeAtack;
-
-    void Awake()
-    {
-        //playerService = new PlayerService(gameObject, projetil, rangeAtack);
-    }
+    private PlayerService PlayerService { get; set; }
 
     void Start()
     {
-        playerService = gameObject.GetComponent<PlayerService>();
+        PlayerService = gameObject.GetComponent<PlayerService>();
     }
 
     void Update()
     {
-        playerService.MudarDirecao();
+        PlayerService.MudarDirecao();
     }
 
     void FixedUpdate()
     {
-        playerService.Andar();
-        playerService.Pular();
-        playerService.atacar();
+        PlayerService.Andar();
+        PlayerService.Pular();
+        PlayerService.Atacar();
+        PlayerService.AtualizaCdw();
     }
 
 

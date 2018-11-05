@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Code.Utils;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,15 +11,18 @@ public class PlayerPuloCollider : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        estaPulando = false;
+        if (coll.gameObject.layer != LayersUtils.ENEMIES)
+            estaPulando = false;
     }
     void OnTriggerStay2D(Collider2D coll)
     {
-        estaPulando = false;
+        if (coll.gameObject.layer != LayersUtils.ENEMIES)
+            estaPulando = false;
     }
     void OnTriggerExit2D(Collider2D coll)
     {
-        estaPulando = true;
+        if (coll.gameObject.layer != LayersUtils.ENEMIES)
+            estaPulando = true;
     }
 
     public bool GetEstaPulando()

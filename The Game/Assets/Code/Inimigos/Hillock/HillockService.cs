@@ -8,19 +8,26 @@ public class HillockService : MonoBehaviour {
     public bool podeAndar { get; set; }
     public bool podeAtacar { get; set; }
     public Hillock Hillock { get; set; }
-    public GameObject player;
-    private int direcao;
     public GameObject atackCollider;
-    float cdwAtaque;
+    public float forcaPulo;
+    public float alturaPulo;
+    public bool estaNoChao = true;
+
+    public bool estaAtacando;
+    private GameObject player;
+    private int direcao;
+    private bool rage = false;
+    private float cdwPulo;
 
     void Start () {
         podeAndar = false;
         podeAtacar = false;
+        estaAtacando = false;
         Hillock = gameObject.GetComponent<Hillock>();
         atackCollider.SetActive(false);
-        cdwAtaque = 0;
-	}
-	
+        player = GameObject.FindGameObjectWithTag("Player");
+        cdwPulo = 0;
+    }
 
     internal void StartCutscene()
     {
@@ -42,8 +49,10 @@ public class HillockService : MonoBehaviour {
             else
                 direcao = -1;
 
-            Vector2 velHorizontal = new Vector2(direcao * Hillock.velHorizontal , Hillock.rb.velocity.y);
+            Vector2 velHorizontal = new Vector2(direcao * Hillock.velHorizontal, Hillock.rb.velocity.y);
             Hillock.rb.velocity = velHorizontal;
+
+            //transform.position = Vector3.MoveTowards(transform.position, player.transform.position, Hillock.velHorizontal);
         }
     }
 
@@ -57,19 +66,22 @@ public class HillockService : MonoBehaviour {
 
     public void Atacar()
     {
-        if (podeAtacar)
+        if (!rage)
         {
-            if(!atackCollider.activeSelf)
-                atackCollider.SetActive(true);
+            AtkMelee();
+        }
+        else
+        {
+            cdwPulo += Time.deltaTime;
+            if (cdwPulo >= Hillock.cdwAtkPulo)
+            {
+                if(!estaAtacando)
+                    AtkPulo();
 
+                cdwPulo = 0;
+            }
 
-            //cdwAtaque += Time.deltaTime;
-            //if(cdwAtaque >= Hillock.cdwAtkSpeed)
-            //{
-            //    atackCollider.SetActive(true);
-            //    cdwAtaque = 0;
-            //}
-
+            AtkMelee();
         }
     }
 
@@ -80,6 +92,53 @@ public class HillockService : MonoBehaviour {
         if (lifeRestante <= 0)
             Destroy(gameObject);
         else
+        {
             Hillock.Hp = lifeRestante;
+            if (lifeRestante <= Hillock.TotalHp * 0.3)
+                rage = true;
+        }
     }
+
+    public void MovimentaNoAr()
+    {
+        if (!estaNoChao)
+        {
+            float playerX = player.transform.position.x;
+            float x = gameObject.transform.position.x;
+            float diferenca = playerX - x;
+
+            if (diferenca < 0)
+                diferenca *= -1;
+
+            Hillock.rb.AddForce(new Vector2(forcaPulo*direcao*diferenca,0));
+        }
+    }
+
+    private void AtkMelee()
+    {
+        if (podeAtacar)
+            if (!atackCollider.activeSelf)
+            {
+                atackCollider.SetActive(true);
+                estaAtacando = true;
+            }
+            else
+            {
+                estaAtacando = false;
+            }
+    }
+
+    private void AtkPulo()
+    {
+
+        float playerX = player.transform.position.x;
+        float x = gameObject.transform.position.x;
+        float diferenca = playerX - x;
+
+        if (diferenca < 0)
+            diferenca *= -1;
+
+        Hillock.rb.velocity = new Vector2(0, alturaPulo);
+    }
+
 }
