@@ -19,18 +19,13 @@ public class AtkBasicoCollider : MonoBehaviour {
     void IgnorarPlayer(Collider2D coll)
     {
         if(coll.gameObject.layer != LayersUtils.PLAYER 
-            && coll.gameObject.layer != LayersUtils.IGNORE_RAYCAST)
+            && coll.gameObject.layer != LayersUtils.IGNORE_RAYCAST
+            && coll.gameObject.tag != TagsUtils.UNTAGGED)
             Destroy(gameObject);
 
-        if(coll.gameObject.tag == "Enemies")
+        if(coll.gameObject.tag == TagsUtils.ENEMIES)
         {
-            coll.gameObject.GetComponent<ZombieService>().ReceberDano(1);
+            coll.gameObject.GetComponent<InimigoService>().ReceberDano(1);
         }
-        if(coll.gameObject.tag == "Hillock")
-        {
-            coll.gameObject.GetComponent<HillockService>().ReceberDano(1);
-        }
-
-
     }
 }

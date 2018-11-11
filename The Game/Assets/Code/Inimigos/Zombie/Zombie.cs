@@ -10,9 +10,11 @@ public class Zombie : MonoBehaviour
     public int cdwAtkSpeed;
     public float Hp;
     public float Dmg;
+    public float TotalHp { get; set; }
 
     void Start()
     {
         this.rb = gameObject.GetComponent<Rigidbody2D>();
+        this.TotalHp = Hp;
     }
 }

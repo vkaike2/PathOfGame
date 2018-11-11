@@ -84,6 +84,12 @@ public class HillockService : MonoBehaviour
         }
     }
 
+    public void AtualizaRage()
+    {
+        if (Hillock.Hp <= Hillock.TotalHp * 0.3)
+            rage = true;
+    }
+
     public void ReceberDano(float dmg)
     {
         float lifeRestante = Hillock.Hp - dmg;
@@ -93,8 +99,6 @@ public class HillockService : MonoBehaviour
         else
         {
             Hillock.Hp = lifeRestante;
-            if (lifeRestante <= Hillock.TotalHp * 0.3)
-                rage = true;
         }
     }
 

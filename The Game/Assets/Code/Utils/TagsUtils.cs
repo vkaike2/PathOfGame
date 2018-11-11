@@ -10,5 +10,6 @@ namespace Assets.Code.Utils
         public static string PLAYER = "Player";
         public static string ENEMIES = "Enemies";
         public static string PAREDE = "Parede";
+        public static string UNTAGGED = "Untagged";
     }
 }

@@ -5198,6 +5198,31 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ad7e5513809d274fb81104edf426665, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &392758558 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1985127261291040, guid: 8ad7e5513809d274fb81104edf426665,
+    type: 2}
+  m_PrefabInternal: {fileID: 392758557}
+--- !u!114 &392758559 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114797463970912980, guid: 8ad7e5513809d274fb81104edf426665,
+    type: 2}
+  m_PrefabInternal: {fileID: 392758557}
+  m_Script: {fileID: 11500000, guid: 43984a4c48beb1644b2139368cd117bb, type: 3}
+--- !u!114 &392758560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 392758558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b033dbe390697f4e9ce08ab99971417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reducaoDano: 0
+  zombie: {fileID: 392758559}
+  hillock: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -5302,7 +5327,7 @@ GameObject:
   - component: {fileID: 832417701}
   m_Layer: 10
   m_Name: Atack
-  m_TagString: Hillock
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5375,7 +5400,7 @@ GameObject:
   - component: {fileID: 1497986705}
   m_Layer: 10
   m_Name: Hillock
-  m_TagString: Hillock
+  m_TagString: Enemies
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5497,8 +5522,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   atackCollider: {fileID: 832417698}
-  forcaPulo: 70
-  alturaPulo: 45
   estaNoChao: 1
   estaAtacando: 0
 --- !u!114 &1497986701
@@ -5512,6 +5535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 224134fc65de3174c83f07e0f795674f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HillockAtackCollider: {fileID: 832417701}
 --- !u!114 &1497986702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5577,7 +5601,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b033dbe390697f4e9ce08ab99971417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reducaoDano: 30
+  reducaoDano: 0
+  zombie: {fileID: 0}
+  hillock: {fileID: 1497986702}
 --- !u!1 &1776212450
 GameObject:
   m_ObjectHideFlags: 0

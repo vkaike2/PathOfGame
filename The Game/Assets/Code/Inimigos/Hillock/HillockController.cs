@@ -5,16 +5,18 @@ using UnityEngine;
 public class HillockController : MonoBehaviour {
 
     public HillockService HillockService { get; set; }
-    public HillockAtackCollider HillockAtackCollider { get; set; }
+    public HillockAtackCollider HillockAtackCollider;
 
     void Start () {
         HillockService = gameObject.GetComponent<HillockService>();
-        HillockAtackCollider = gameObject.GetComponentInChildren<HillockAtackCollider>();
+        //HillockAtackCollider = gameObject.GetComponentInChildren<HillockAtackCollider>();
     }
 	
 	void Update () {
         HillockService.MudarDirecao();
-	}
+        HillockService.AtualizaRage();
+
+    }
 
     void FixedUpdate()
     {
