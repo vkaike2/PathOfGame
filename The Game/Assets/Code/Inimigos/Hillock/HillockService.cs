@@ -1,16 +1,16 @@
-﻿using System;
+﻿using Assets.Code.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HillockService : MonoBehaviour {
+public class HillockService : MonoBehaviour
+{
 
-    public bool podeAndar { get; set; }
-    public bool podeAtacar { get; set; }
+    public bool PodeAndar { get; set; }
+    public bool PodeAtacar { get; set; }
     public Hillock Hillock { get; set; }
     public GameObject atackCollider;
-    public float forcaPulo;
-    public float alturaPulo;
     public bool estaNoChao = true;
 
     public bool estaAtacando;
@@ -19,13 +19,14 @@ public class HillockService : MonoBehaviour {
     private bool rage = false;
     private float cdwPulo;
 
-    void Start () {
-        podeAndar = false;
-        podeAtacar = false;
+    void Start()
+    {
+        PodeAndar = false;
+        PodeAtacar = false;
         estaAtacando = false;
         Hillock = gameObject.GetComponent<Hillock>();
         atackCollider.SetActive(false);
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag(TagsUtils.PLAYER);
         cdwPulo = 0;
     }
 
@@ -36,12 +37,12 @@ public class HillockService : MonoBehaviour {
 
     internal void PararCutscene()
     {
-        podeAndar = true;
+        PodeAndar = true;
     }
 
     public void Movimentar()
     {
-        if (podeAndar)
+        if (PodeAndar)
         {
             direcao = 0;
             if (player.transform.position.x > gameObject.transform.position.x)
@@ -49,10 +50,8 @@ public class HillockService : MonoBehaviour {
             else
                 direcao = -1;
 
-            Vector2 velHorizontal = new Vector2(direcao * Hillock.velHorizontal, Hillock.rb.velocity.y);
+            Vector2 velHorizontal = new Vector2(direcao * Hillock.velocidadeMovimento, Hillock.rb.velocity.y);
             Hillock.rb.velocity = velHorizontal;
-
-            //transform.position = Vector3.MoveTowards(transform.position, player.transform.position, Hillock.velHorizontal);
         }
     }
 
@@ -75,7 +74,7 @@ public class HillockService : MonoBehaviour {
             cdwPulo += Time.deltaTime;
             if (cdwPulo >= Hillock.cdwAtkPulo)
             {
-                if(!estaAtacando)
+                if (!estaAtacando)
                     AtkPulo();
 
                 cdwPulo = 0;
@@ -110,22 +109,20 @@ public class HillockService : MonoBehaviour {
             if (diferenca < 0)
                 diferenca *= -1;
 
-            Hillock.rb.AddForce(new Vector2(forcaPulo*direcao*diferenca,0));
+            Hillock.rb.AddForce(new Vector2(Hillock.velocidadeNoAr * direcao * diferenca, 0));
         }
     }
 
     private void AtkMelee()
     {
-        if (podeAtacar)
+        if (PodeAtacar)
+        {
             if (!atackCollider.activeSelf)
             {
                 atackCollider.SetActive(true);
                 estaAtacando = true;
             }
-            else
-            {
-                estaAtacando = false;
-            }
+        }
     }
 
     private void AtkPulo()
@@ -138,7 +135,7 @@ public class HillockService : MonoBehaviour {
         if (diferenca < 0)
             diferenca *= -1;
 
-        Hillock.rb.velocity = new Vector2(0, alturaPulo);
+        Hillock.rb.velocity = new Vector2(0, Hillock.impulsoPulo);
     }
 
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Zombie : MonoBehaviour
 {
     public Rigidbody2D rb { get; set; }
-    public int velHorizontal;
+    public int velocidadeMovimento;
     public List<int> cdwAndar;
     public int cdwAtkSpeed;
     public float Hp;

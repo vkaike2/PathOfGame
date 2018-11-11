@@ -18,7 +18,8 @@ public class AtkBasicoCollider : MonoBehaviour {
 
     void IgnorarPlayer(Collider2D coll)
     {
-        if(coll.gameObject.tag != "Player" && coll.gameObject.tag != "Untagged")
+        if(coll.gameObject.layer != LayersUtils.PLAYER 
+            && coll.gameObject.layer != LayersUtils.IGNORE_RAYCAST)
             Destroy(gameObject);
 
         if(coll.gameObject.tag == "Enemies")

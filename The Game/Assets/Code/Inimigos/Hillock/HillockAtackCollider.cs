@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Code.Utils;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +19,27 @@ public class HillockAtackCollider : MonoBehaviour
         podeAtacar = false;
     }
 
-    void FixedUpdate()
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.gameObject.tag.Equals(TagsUtils.PLAYER))
+            podeAtacar = true;
+    }
+    
+    void OnTriggerStay2D(Collider2D coll)
+    {
+        if (coll.gameObject.tag.Equals(TagsUtils.PLAYER))
+            podeAtacar = true;
+        else
+            podeAtacar = false;
+    }
+
+    void OnTriggerExit2D(Collider2D coll)
+    {
+        if (coll.gameObject.tag.Equals(TagsUtils.PLAYER))
+            podeAtacar = false;
+    }
+
+    public void EfetuarAtaque()
     {
         if (gameObject.activeSelf)
         {
@@ -36,25 +57,4 @@ public class HillockAtackCollider : MonoBehaviour
         else
             cdwAtaq = 0;
     }
-
-    void OnTriggerEnter2D(Collider2D coll)
-    {
-        if (coll.gameObject.tag.Equals("Player"))
-            podeAtacar = true;
-    }
-    
-    void OnTriggerStay2D(Collider2D coll)
-    {
-        if (coll.gameObject.tag.Equals("Player"))
-            podeAtacar = true;
-        else
-            podeAtacar = false;
-    }
-
-    void OnTriggerExit2D(Collider2D coll)
-    {
-        if (coll.gameObject.tag.Equals("Player"))
-            podeAtacar = false;
-    }
-
 }

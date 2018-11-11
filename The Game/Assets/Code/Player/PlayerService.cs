@@ -7,7 +7,6 @@ using System;
 
 public class PlayerService : MonoBehaviour
 {
-
     private Player Player { get; set; }
     private PlayerPuloCollider PlayerPuloCollider { get; set; }
     private PlayerParedeCollider PlayerParedeCollider { get; set; }
@@ -16,11 +15,8 @@ public class PlayerService : MonoBehaviour
     public GameObject RangeAtack; 
     private float cdwDmg = 0;
     private float cdwAtk = 0;
-
-    //Guarda a Velocidade Horizontal do Player Quando ele para o Moviemnto
-    private int vHorizontal = 0;
-    //Guarda a Velocidade Verical do Player Quando ele para o Moviemnto
-    private int vVerical = 0;
+    private int velMovimentoAramzaenada = 0;
+    private int impPuloArmazenado = 0;
 
     private Color corOriginal;
 
@@ -39,13 +35,13 @@ public class PlayerService : MonoBehaviour
         if (axisH != 0 && !PlayerPuloCollider.GetEstaPulando() && !PlayerParedeCollider.GetEstaNaParede()
             || axisH != 0 && !PlayerPuloCollider.GetEstaPulando() && PlayerParedeCollider.GetEstaNaParede())
         {
-            Vector2 vetHorizontal = new Vector2(axisH * Player.velHorizontal, Player.rb.velocity.y);
+            Vector2 vetHorizontal = new Vector2(axisH * Player.velocidadeMoviemnto, Player.rb.velocity.y);
             Player.rb.velocity = vetHorizontal;
         }
         else if (axisH != 0 && PlayerPuloCollider.GetEstaPulando())
         {
             Vector2 vetHorizontal = new Vector2(axisH, 0);
-            Player.rb.AddForce(vetHorizontal * (Player.velHorizontal * 3));
+            Player.rb.AddForce(vetHorizontal * (Player.velocidadeMoviemnto * 2));
         }
     }
 
@@ -56,7 +52,7 @@ public class PlayerService : MonoBehaviour
         if (axisV != 0 && !PlayerPuloCollider.GetEstaPulando())
         {
             Vector2 vetVertical = new Vector2(0, axisV);
-            Player.rb.AddForce(vetVertical * Player.velVertical);
+            Player.rb.AddForce(vetVertical * Player.impulsoPulo);
         }
     }
 
@@ -90,6 +86,25 @@ public class PlayerService : MonoBehaviour
             gameObject.GetComponent<SpriteRenderer>().color = corOriginal;
     }
 
+    internal void PararMovimentos(bool pararMovimentos)
+    {
+        if(pararMovimentos)
+        {
+            if(velMovimentoAramzaenada == 0 && impPuloArmazenado == 0)
+            {
+                velMovimentoAramzaenada = Player.velocidadeMoviemnto;
+                impPuloArmazenado = Player.impulsoPulo;
+            }
+            Player.velocidadeMoviemnto = 0;
+            Player.impulsoPulo = 0;
+        }
+        else
+        {
+            Player.velocidadeMoviemnto = velMovimentoAramzaenada;
+            Player.impulsoPulo = impPuloArmazenado;
+        }
+    }
+
     public void ReceberDano(float dmg)
     {
         if(cdwDmg >= Player.cdwDmage)
@@ -105,25 +120,6 @@ public class PlayerService : MonoBehaviour
                 Player.Hp -= dmg;
             }
             cdwDmg = 0;
-        }
-    }
-
-    internal void PararMovimentos(bool pararMovimentos)
-    {
-        if(pararMovimentos)
-        {
-            if(vHorizontal == 0 && vVerical == 0)
-            {
-                vHorizontal = Player.velHorizontal;
-                vVerical = Player.velVertical;
-            }
-            Player.velHorizontal = 0;
-            Player.velVertical = 0;
-        }
-        else
-        {
-            Player.velHorizontal = vHorizontal;
-            Player.velVertical = vVerical;
         }
     }
 }

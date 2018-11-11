@@ -28,11 +28,10 @@ public class AtkBasicoService : MonoBehaviour
         AtkBasico.rb.velocity = new Vector2(AtkBasico.velHorizontal * direcao, 0);
     }
 
-    public void Excluir()
+    public void AutoDestruir()
     {
         cdwRange += Time.deltaTime;
         if (cdwRange > AtkBasico.RangeSec)
             Destroy(gameObject);
-
     }
 }

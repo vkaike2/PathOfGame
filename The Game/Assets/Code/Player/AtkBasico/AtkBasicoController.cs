@@ -25,6 +25,6 @@ public class AtkBasicoController : MonoBehaviour
     void FixedUpdate()
     {
         atkBasicoService.Atacar();
-        atkBasicoService.Excluir();
+        atkBasicoService.AutoDestruir();
     }
 }
