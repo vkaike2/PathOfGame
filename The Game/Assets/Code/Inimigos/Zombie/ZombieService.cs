@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class ZombieService : MonoBehaviour
 {
-    private float cdwAndar;
-    private float cdwAtkSpeed;
+    private float _cdwAndar;
+    private float _cdwAtkSpeed;
     private bool estaAndando;
     private int direcao;
     private Zombie Zombie { get; set; }
+    public Inimigo ZombieComum { get; set; }
     public Transform inicioVisao, fimVisao, visaoChao;
     private GameObject PlayerGameObject { get; set; }
     private int velMovimentoArmazenada = 0;
@@ -16,16 +17,17 @@ public class ZombieService : MonoBehaviour
 
     void Start()
     {
-        cdwAndar = 0;
-        cdwAtkSpeed = 0;
+        _cdwAndar = 0;
+        _cdwAtkSpeed = 0;
         direcao = 0;
         estaAndando = false;
+        this.ZombieComum = gameObject.GetComponent<Inimigo>();
         this.Zombie = gameObject.GetComponent<Zombie>();
         this.PlayerGameObject = GameObject.FindWithTag("Player");
         this.ZombieAtackCollider = gameObject.GetComponentInChildren<ZombieAtackCollider>();
     }
 
-    public void Andar()
+    public void ControlaMovimento()
     {
         Debug.DrawLine(inicioVisao.position, fimVisao.position, Color.red);
         Debug.DrawLine(inicioVisao.position, visaoChao.position, Color.green);
@@ -42,25 +44,25 @@ public class ZombieService : MonoBehaviour
         bool deveAtacar = ZombieAtackCollider.DeveAtacar();
         if (deveAtacar)
         {
-            if (Zombie.velocidadeMovimento != 0)
-                velMovimentoArmazenada = Zombie.velocidadeMovimento;
+            if (ZombieComum.velocidadeMovimento != 0)
+                velMovimentoArmazenada = ZombieComum.velocidadeMovimento;
 
-            Zombie.velocidadeMovimento = 0;
-            cdwAtkSpeed += Time.deltaTime;
+            ZombieComum.velocidadeMovimento = 0;
+            _cdwAtkSpeed += Time.deltaTime;
 
 
-            if (cdwAtkSpeed >= Zombie.cdwAtkSpeed)
+            if (_cdwAtkSpeed >= ZombieComum.cdwAtkSpeed)
             {
                 ZombieAtackCollider.EfetuarAtaque();
-                cdwAtkSpeed = 0;
+                _cdwAtkSpeed = 0;
             }
         }
         else
         {
             if (velMovimentoArmazenada != 0)
-                Zombie.velocidadeMovimento = velMovimentoArmazenada;
+                ZombieComum.velocidadeMovimento = velMovimentoArmazenada;
 
-            cdwAtkSpeed = 0;
+            _cdwAtkSpeed = 0;
         }
     }
 
@@ -72,22 +74,16 @@ public class ZombieService : MonoBehaviour
             gameObject.transform.eulerAngles = new Vector3(0, 180, 0);
     }
 
-    public void ReceberDano(float dmg)
-    {
-        float lifeRestante = Zombie.Hp - dmg;
-
-        if (lifeRestante <= 0)
-            Destroy(gameObject);
-        else
-            Zombie.Hp = lifeRestante;
-    }
-
+    /*
+     * Anda Randomicamente durante o tempo descrito em "Zombie.andaPor" a cada "Zombie.cdwAndar"
+     */
     private void IdleAndar()
     {
-        cdwAndar += Time.deltaTime;
+        _cdwAndar += Time.deltaTime;
         bool naoVaiCair = Physics2D.Linecast(inicioVisao.position, visaoChao.position, 1 << LayerMask.NameToLayer("Parede"));
-        if (cdwAndar >= Zombie.cdwAndar[0] &&
-            cdwAndar <= (Zombie.cdwAndar[0] + Zombie.cdwAndar[1]))
+
+        if (_cdwAndar >= Zombie.cdwAndar &&
+            _cdwAndar <= (Zombie.andaPor + Zombie.cdwAndar))
         {
             if (!estaAndando)
             {
@@ -97,18 +93,21 @@ public class ZombieService : MonoBehaviour
 
             if (naoVaiCair)
             {
-                Vector2 velHorizontal = new Vector2(direcao * Zombie.velocidadeMovimento, Zombie.rb.velocity.y);
-                Zombie.rb.velocity = velHorizontal;
+                Vector2 velHorizontal = new Vector2(direcao * ZombieComum.velocidadeMovimento, ZombieComum.Rb.velocity.y);
+                ZombieComum.Rb.velocity = velHorizontal;
             }
         }
 
-        if (cdwAndar >= (Zombie.cdwAndar[0] + Zombie.cdwAndar[1]))
+        if (_cdwAndar >= (Zombie.andaPor + Zombie.cdwAndar))
         {
-            cdwAndar = 0;
+            _cdwAndar = 0;
             estaAndando = false;
         }
     }
 
+    /*
+     * Quando o player esta no campo de vizão do Zombie ele persegue ele 
+     */
     private void PerseguirPlayer()
     {
         float playerX = PlayerGameObject.transform.position.x;
@@ -118,7 +117,7 @@ public class ZombieService : MonoBehaviour
         else
             direcao = -1;
 
-        Vector2 velHorizontal = new Vector2(direcao * Zombie.velocidadeMovimento * 1.5f, Zombie.rb.velocity.y);
-        Zombie.rb.velocity = velHorizontal;
+        Vector2 velHorizontal = new Vector2(direcao * ZombieComum.velocidadeMovimento * 1.3f, ZombieComum.Rb.velocity.y);
+        ZombieComum.Rb.velocity = velHorizontal;
     }
 }

@@ -104,6 +104,8 @@ GameObject:
   - component: {fileID: 114436435421685280}
   - component: {fileID: 114797463970912980}
   - component: {fileID: 114853492903035834}
+  - component: {fileID: 114459320244951466}
+  - component: {fileID: 114421001803347880}
   m_Layer: 10
   m_Name: Zombie
   m_TagString: Enemies
@@ -251,7 +253,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.043857932, y: 0}
+  m_Offset: {x: 0.043857932, y: -0.0013525486}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -262,7 +264,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.2192092, y: 1}
+  m_Size: {x: 0.2192092, y: 0.9355364}
   m_EdgeRadius: 0
 --- !u!61 &61792814615650880
 BoxCollider2D:
@@ -300,6 +302,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9efd74a6a5ff2894999a045d1ed373d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114421001803347880
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1985127261291040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 513d31f4608e30f479ce11d389e35df9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocidadeMovimento: 1
+  cdwAtkSpeed: 2
+  hp: 2
+  dmg: 1
+  reducaoDano: 0
 --- !u!114 &114436435421685280
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -309,6 +327,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8c15c25410ffc7349a1aa49759de0507, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114459320244951466
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1985127261291040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d70045b52b68834e96ee12a43b2998a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114516664596123266
@@ -322,6 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 373ea71f910f0694c8a5408fd47033e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  estaAtacando: 0
   dmgCollider: {fileID: 1299956882016718}
 --- !u!114 &114797463970912980
 MonoBehaviour:
@@ -334,11 +364,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43984a4c48beb1644b2139368cd117bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidadeMovimento: 1
-  cdwAndar: 0200000001000000
-  cdwAtkSpeed: 2
-  Hp: 1
-  Dmg: 1
+  cdwAndar: 2
+  andaPor: 1
 --- !u!114 &114853492903035834
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -13,8 +13,8 @@ public class PlayerService : MonoBehaviour
     private float axisH;
     public GameObject Projetil;
     public GameObject RangeAtack; 
-    private float cdwDmg = 0;
-    private float cdwAtk = 0;
+    private float _cdwDmg = 0;
+    private float _cdwAtk = 0;
     private int velMovimentoAramzaenada = 0;
     private int impPuloArmazenado = 0;
 
@@ -47,11 +47,11 @@ public class PlayerService : MonoBehaviour
 
     public void Pular()
     {
-        float axisV = Input.GetAxisRaw(AxisUtils.AXIS_VERTICAL);
+        float axisJump = Input.GetAxisRaw(AxisUtils.AXIS_JUMP);
 
-        if (axisV != 0 && !PlayerPuloCollider.GetEstaPulando())
+        if (axisJump != 0 && !PlayerPuloCollider.GetEstaPulando())
         {
-            Vector2 vetVertical = new Vector2(0, axisV);
+            Vector2 vetVertical = new Vector2(0, axisJump);
             Player.rb.AddForce(vetVertical * Player.impulsoPulo);
         }
     }
@@ -60,10 +60,10 @@ public class PlayerService : MonoBehaviour
     {
         float fire = Input.GetAxisRaw(AxisUtils.AXIS_FIRE1);
 
-        if (fire != 0 && cdwAtk >= Player.atkSpeed)
+        if (fire != 0 && _cdwAtk >= Player.atkSpeed)
         {
             Instantiate(Projetil, RangeAtack.transform.position, gameObject.transform.rotation);
-            cdwAtk = 0;
+            _cdwAtk = 0;
         }
     }
 
@@ -77,10 +77,10 @@ public class PlayerService : MonoBehaviour
 
     public void AtualizaCdw()
     {
-        cdwAtk += Time.deltaTime;
-        cdwDmg += Time.deltaTime;
+        _cdwAtk += Time.deltaTime;
+        _cdwDmg += Time.deltaTime;
 
-        if (cdwDmg < Player.cdwDmage)
+        if (_cdwDmg < Player.cdwDmage)
             gameObject.GetComponent<SpriteRenderer>().color = Color.black;
         else
             gameObject.GetComponent<SpriteRenderer>().color = corOriginal;
@@ -107,7 +107,7 @@ public class PlayerService : MonoBehaviour
 
     public void ReceberDano(float dmg)
     {
-        if(cdwDmg >= Player.cdwDmage)
+        if(_cdwDmg >= Player.cdwDmage)
         {
             float lifeRestante = Player.Hp - dmg;
             if (lifeRestante <= 0)
@@ -119,7 +119,7 @@ public class PlayerService : MonoBehaviour
             {
                 Player.Hp -= dmg;
             }
-            cdwDmg = 0;
+            _cdwDmg = 0;
         }
     }
 }

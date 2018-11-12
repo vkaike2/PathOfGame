@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public float atkSpeed;
     public float Hp;
     public float cdwDmage;
+    public float dmg;
 
     void Start()
     {

@@ -22,7 +22,7 @@ public class ZombieController : MonoBehaviour
 
     void FixedUpdate()
     {
-        zombieService.Andar();
+        zombieService.ControlaMovimento();
         zombieService.Atacar();
     }
 }

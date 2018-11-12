@@ -7,15 +7,15 @@ public class HillockAtackCollider : MonoBehaviour
 {
 
     private GameObject player;
-    public Hillock Hillock { get; set; }
-    private float cdwAtaq;
+    public Inimigo HillockComum { get; set; }
+    private float _cdwAtaq;
     private bool podeAtacar;
 
     void Start()
     {
-        Hillock = gameObject.GetComponentInParent<Hillock>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        cdwAtaq = 0;
+        HillockComum = gameObject.GetComponentInParent<Inimigo>();
+        player = GameObject.FindGameObjectWithTag(TagsUtils.PLAYER);
+        _cdwAtaq = 0;
         podeAtacar = false;
     }
 
@@ -43,18 +43,18 @@ public class HillockAtackCollider : MonoBehaviour
     {
         if (gameObject.activeSelf)
         {
-            cdwAtaq += Time.deltaTime;
-            if (cdwAtaq >= Hillock.cdwAtkSpeed)
+            _cdwAtaq += Time.deltaTime;
+            if (_cdwAtaq >= HillockComum.cdwAtkSpeed)
             {
                 if (podeAtacar)
-                    player.GetComponent<PlayerService>().ReceberDano(Hillock.Dmg);
+                    player.GetComponent<PlayerService>().ReceberDano(HillockComum.dmg);
 
-                cdwAtaq = 0;
+                _cdwAtaq = 0;
                 gameObject.SetActive(false);
-                gameObject.GetComponent<HillockService>().estaAtacando = false;
+                gameObject.GetComponentInParent<HillockService>().estaAtacando = false;
             }
         }
         else
-            cdwAtaq = 0;
+            _cdwAtaq = 0;
     }
 }

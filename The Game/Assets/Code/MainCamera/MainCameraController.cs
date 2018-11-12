@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Code.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,28 +7,22 @@ using UnityEngine;
 public class MainCameraController : MonoBehaviour
 {
 
+    public Vector3 Offset { get; set; }
+    public GameObject hillock;
     public GameObject player;
-    private Vector3 offset;
-
-    public GameObject Hillock;
-    public GameObject Player;
     public bool Cutscene { get; set; }
     public bool HillockCs { get; set; }
 
-    private float cdwCs = 0;
-    private Camera camera;
+    private float _cdwCs = 0;
+    private int _countAnimacao = 0;
+    public Camera Camera { get; set; }
 
     void Start()
     {
-        offset = transform.position - player.transform.position;
+        Offset = transform.position - player.transform.position;
         Cutscene = false;
         HillockCs = false;
-        camera = gameObject.GetComponent<Camera>();
-    }
-
-    void Update()
-    {
-
+        Camera = gameObject.GetComponent<Camera>();
     }
 
     void FixedUpdate()
@@ -40,54 +35,54 @@ public class MainCameraController : MonoBehaviour
     {
         if (!Cutscene)
         {
-            transform.position = player.transform.position + offset;
+            transform.position = player.transform.position + Offset;
         }
     }
 
     public void AtivarCutscene(string cutscene)
     {
-        if (cutscene.Equals("Hillock"))
+        if (cutscene.Equals(CutscenesUtils.HILLOCK))
         {
             Cutscene = true;
             HillockCs = true;
         }
     }
-    private int contadorAnimacao = 0;
+
     private void HillockCutscene()
     {
         float x = transform.position.x;
         float y = transform.position.y;
-        Player.GetComponent<PlayerService>().PararMovimentos(true);
-        if (x <= 138.9f && cdwCs == 0)
+        player.GetComponent<PlayerService>().PararMovimentos(true);
+        if (x <= 138.9f && _cdwCs == 0)
         {
             transform.position = new Vector3(
                 x + 0.2f,
                 y + 0.08f,
                 transform.position.z);
-            contadorAnimacao++;
-            camera.orthographicSize += 0.101f;
+            _countAnimacao++;
+            Camera.orthographicSize += 0.101f;
         }
         else
         {
-            cdwCs += Time.deltaTime;
+            _cdwCs += Time.deltaTime;
 
-            if (cdwCs >= 3)
+            if (_cdwCs >= 3)
             {
-                Hillock.GetComponent<HillockService>().StartCutscene();
+                hillock.GetComponent<HillockService>().StartCutscene();
                 if (x >= 124.5f)
                 {
                     transform.position = new Vector3(
                         x - 0.2f,
                         y - 0.08f,
                         transform.position.z);
-                    camera.orthographicSize -= 0.101f;
+                    Camera.orthographicSize -= 0.101f;
                 }
                 else
                 {
-                    cdwCs = 0;
-                    contadorAnimacao = 0;
-                    Player.GetComponent<PlayerService>().PararMovimentos(false);
-                    Hillock.GetComponent<HillockService>().PararCutscene();
+                    _cdwCs = 0;
+                    _countAnimacao = 0;
+                    player.GetComponent<PlayerService>().PararMovimentos(false);
+                    hillock.GetComponent<HillockService>().PararCutscene();
                     HillockCs = false;
                     Cutscene = false;
                 }

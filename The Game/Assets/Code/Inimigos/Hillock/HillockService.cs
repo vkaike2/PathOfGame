@@ -10,13 +10,14 @@ public class HillockService : MonoBehaviour
     public bool PodeAndar { get; set; }
     public bool PodeAtacar { get; set; }
     public Hillock Hillock { get; set; }
+    public Inimigo HillockComum { get; set; }
     public GameObject atackCollider;
     public bool estaNoChao = true;
 
     public bool estaAtacando;
     private GameObject player;
     private int direcao;
-    private bool rage = false;
+    public bool rage = false;
     private float cdwPulo;
 
     void Start()
@@ -25,6 +26,7 @@ public class HillockService : MonoBehaviour
         PodeAtacar = false;
         estaAtacando = false;
         Hillock = gameObject.GetComponent<Hillock>();
+        HillockComum = gameObject.GetComponent<Inimigo>();
         atackCollider.SetActive(false);
         player = GameObject.FindGameObjectWithTag(TagsUtils.PLAYER);
         cdwPulo = 0;
@@ -50,8 +52,8 @@ public class HillockService : MonoBehaviour
             else
                 direcao = -1;
 
-            Vector2 velHorizontal = new Vector2(direcao * Hillock.velocidadeMovimento, Hillock.rb.velocity.y);
-            Hillock.rb.velocity = velHorizontal;
+            Vector2 velHorizontal = new Vector2(direcao * HillockComum.velocidadeMovimento, HillockComum.Rb.velocity.y);
+            HillockComum.Rb.velocity = velHorizontal;
         }
     }
 
@@ -86,20 +88,8 @@ public class HillockService : MonoBehaviour
 
     public void AtualizaRage()
     {
-        if (Hillock.Hp <= Hillock.TotalHp * 0.3)
+        if (HillockComum.hp <= (HillockComum.TotalHp * 0.3))
             rage = true;
-    }
-
-    public void ReceberDano(float dmg)
-    {
-        float lifeRestante = Hillock.Hp - dmg;
-
-        if (lifeRestante <= 0)
-            Destroy(gameObject);
-        else
-        {
-            Hillock.Hp = lifeRestante;
-        }
     }
 
     public void MovimentaNoAr()
@@ -113,7 +103,7 @@ public class HillockService : MonoBehaviour
             if (diferenca < 0)
                 diferenca *= -1;
 
-            Hillock.rb.AddForce(new Vector2(Hillock.velocidadeNoAr * direcao * diferenca, 0));
+            HillockComum.Rb.AddForce(new Vector2(Hillock.velocidadeNoAr * direcao * diferenca, 0));
         }
     }
 
@@ -139,7 +129,7 @@ public class HillockService : MonoBehaviour
         if (diferenca < 0)
             diferenca *= -1;
 
-        Hillock.rb.velocity = new Vector2(0, Hillock.impulsoPulo);
+        HillockComum.Rb.velocity = new Vector2(0, Hillock.impulsoPulo);
     }
 
 }

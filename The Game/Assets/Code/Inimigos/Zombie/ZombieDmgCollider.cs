@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class ZombieDmgCollider : MonoBehaviour {
 
-    private Zombie Zombie { get; set; }
+    private Inimigo ZombieComum { get; set; }
     private GameObject Player { get; set; }
 
     void Start()
     {
-        Zombie = gameObject.GetComponentInParent<Zombie>();
+        ZombieComum = gameObject.GetComponentInParent<Inimigo>();
         Player = GameObject.FindGameObjectWithTag(TagsUtils.PLAYER);
     }
 
@@ -18,7 +18,7 @@ public class ZombieDmgCollider : MonoBehaviour {
     {
         if (coll.gameObject.tag == TagsUtils.PLAYER)
         {
-            Player.GetComponent<PlayerService>().ReceberDano(Zombie.Dmg);
+            Player.GetComponent<PlayerService>().ReceberDano(ZombieComum.dmg);
             gameObject.SetActive(false);
         }
     }
