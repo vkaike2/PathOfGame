@@ -17,6 +17,11 @@ public class GroundCheckCollider : MonoBehaviour {
     #region Colliders
     void OnTriggerEnter2D(Collider2D coll)
     {
+        if(coll.gameObject.name == "Teste")
+        {
+            GameObject.Find("Main Camera").GetComponent<MainCameraController>().enabled = false;
+        }
+
         PlayerService.EstaNoChao(true, coll);
     }
     void OnTriggerStay2D(Collider2D coll)
@@ -26,6 +31,11 @@ public class GroundCheckCollider : MonoBehaviour {
     void OnTriggerExit2D(Collider2D coll)
     {
         PlayerService.EstaNoChao(false, coll);
+
+        if (coll.gameObject.name == "Teste")
+        {
+            GameObject.Find("Main Camera").GetComponent<MainCameraController>().enabled = true;
+        }
     }
     #endregion
 }
